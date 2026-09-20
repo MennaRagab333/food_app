@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:food_app/core/networking/api_result.dart';
 
 import '../../data/models/product_model.dart';
 import '../../data/repo/product_repo.dart';
@@ -14,12 +14,14 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> getProducts() async {
     emit(HomeLoading());
 
-    try {
-      final products = await _productRepo.getProducts();
+    final result = await _productRepo.getProducts();
 
-      emit(HomeSuccess(products));
-    } catch (e) {
-      emit(HomeError('Failed to get products'));
+    switch (result) {
+      case Success<List<ProductModel>>(data: final products):
+        emit(HomeSuccess(products));
+
+      case Error<List<ProductModel>>(error: final message):
+        emit(HomeError(message));
     }
   }
 }

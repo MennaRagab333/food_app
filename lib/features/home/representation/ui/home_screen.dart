@@ -8,6 +8,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<HomeCubit>().getProducts();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Food App'),
@@ -45,13 +47,10 @@ class HomeScreen extends StatelessWidget {
                           height: 100,
                           fit: BoxFit.cover,
                         ),
-
                         const SizedBox(width: 15),
-
                         Expanded(
                           child: Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 product.title,
@@ -60,17 +59,13 @@ class HomeScreen extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-
                               const SizedBox(height: 8),
-
                               Text(
                                 product.description,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
-
                               const SizedBox(height: 8),
-
                               Text(
                                 '\$${product.price}',
                                 style: const TextStyle(
